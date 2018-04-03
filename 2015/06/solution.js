@@ -5,22 +5,21 @@ class Light {
     this.x = x;
     this.y = y;
     this.on = false;
+    this.brightness = 0;
   }
 
   turnOn() {
-    this.on = true;
+    this.brightness++;
   }
 
   turnOff() {
-    this.on = false;
+    if (this.brightness > 0) {
+      this.brightness--;
+    }
   }
 
   toggle() {
-    if (this.on === true) {
-      this.on = false;
-    } else {
-      this.on = true;
-    }
+    this.brightness += 2;
   }
 
   isOn() {
@@ -79,7 +78,7 @@ class Grid {
   }
 }
 
-class InstructionRunner {
+class LightSystem {
   constructor(path) {
     this.path = path;
     this.grid = new Grid();
@@ -117,8 +116,15 @@ class InstructionRunner {
     });
     return lights.length;
   }
+
+  countTotalBrightness() {
+    let total = this.grid.lights.reduce((sum, light) => { 
+      return sum + light.brightness;
+    }, 0);
+    return total;
+  }
 }
 
-test = new InstructionRunner('input.txt');
-test.run();
-console.log(test.countLightsOn());
+system = new LightSystem('input.txt');
+system.run();
+console.log(system.countTotalBrightness());
