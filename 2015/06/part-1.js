@@ -5,7 +5,6 @@ class Light {
     this.x = x;
     this.y = y;
     this.on = false;
-    this.brightness = 0;
   }
 
   turnOn() {
@@ -87,11 +86,6 @@ class LightSystem {
     this.instructions = fs.readFileSync(this.path).toString().split('\n');
   }
 
-  test() {
-    console.log(this.instructions[0]);
-    this.doLine(this.instructions[0]);
-  }
-
   run() {
     let instructionsLength = this.instructions.length;
     for(let i = 0; i < instructionsLength; i++) {
@@ -117,13 +111,6 @@ class LightSystem {
       return l.isOn();
     });
     return lights.length;
-  }
-
-  countTotalBrightness() {
-    let total = this.grid.lights.reduce((sum, light) => { 
-      return sum + light.brightness;
-    }, 0);
-    return total;
   }
 }
 
